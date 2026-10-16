@@ -492,6 +492,14 @@
         }
       ]
     },
+    "build-pipeline": {
+      "trigger": "在搭建 Three.js 渲染管线、准备本机环境（依赖/代理/字体/抠像模型）或编排批量渲染前",
+      "entries": [
+        {
+          "file": "references/build-pipeline-lessons.md"
+        }
+      ]
+    },
     "reference-reproduction": {
       "trigger": "用户要求精确/逐帧复刻参考时，在 assets 查看、解码和分析参考之前完整读；使用原生帧率与原帧事件",
       "entries": [
