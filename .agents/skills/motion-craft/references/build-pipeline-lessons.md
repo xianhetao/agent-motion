@@ -11,6 +11,13 @@
 - pip 安装慢先换清华源；venv 装在受管 runtime 目录内，不污染全局。
 - 受管 Node 可能带安全删除护栏（shim 拦截 `fs.rmSync`，批量删除目录报 SAFE_DELETE_BULK_CONFIRM_REQUIRED）；渲染器开头清空上千帧目录会直接失败。渲染前用 shell 手动清帧目录，或让渲染器写到递增编号的新目录。
 
+## 跨平台（macOS ↔ Windows）
+
+- 工程本体已为 Windows 适配：`read-stage.py` 内置 PowerShell 引号分支、仓库带 `start.bat`、`render.mjs` 的 ffmpeg 路径支持 `FFMPEG_PATH` 环境变量兜底；Playwright Chromium、ONNX RVM、numpy 音效均跨平台。
+- 平台绑定的只有本机装配层：`~/.workbuddy/skills/` 下的 symlink 挂载是 macOS 做法，Windows 上需在 WorkBuddy 内重新安装/挂载技能目录，或直接复制 `.agents/skills/` 两个技能包。
+- 本文件记录的路径（受管 node 绝对路径、`~/.local/bin/ffmpeg`、镜像源）是 macOS 实测值；换 Windows 后 ffmpeg 用 `FFMPEG_PATH` 指向实际 exe，Node 装官方 LTS，其余先实测再沿用。
+- Windows + 中文项目路径（如"我是导演"）个别工具链可能编码异常；工作目录优先放纯 ASCII 路径。成片与工程资产（work/ 目录）可直接拷贝复用，渲染走浏览器、与平台无关。
+
 ## 渲染管线与确定性
 
 - 完整成片用"本地静态 server + 无头 Chromium 逐帧截图 + ffmpeg 编码"渲染；不依赖实时播放录制，帧号即真相。
